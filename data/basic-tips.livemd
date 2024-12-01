@@ -1,0 +1,96 @@
+# Basic tips
+
+## Tipos básicos
+
+### Inteiros (Integer)
+
+O Elixir possui suporte para números binários, octais e hexadecimais.
+
+```elixir
+my_int_number = 255
+my_binary_number = 0b0110 # 6
+my_octal_number = 0o644 # 420
+my_hex_number = 0x1F # 31
+
+IO.puts("Decimal: #{my_int_number}")
+IO.puts("Binary: #{Integer.to_string(my_binary_number, 2)} (#{my_binary_number})")
+IO.puts("Octal: #{Integer.to_string(my_octal_number, 8)} (#{my_octal_number})")
+IO.puts("Hexadecimal: #{Integer.to_string(my_hex_number, 16)} (#{my_hex_number})")
+```
+
+### Pontos flutuantes (Float)
+
+<!-- livebook:{"break_markdown":true} -->
+
+Em elixir, os floats requerem um decimal depois de pelomenos um dígito; Eles possuem a precisão de 64 bits e suportam "e" para números exponenciais.
+
+```elixir
+my_float_number = 3.14
+my_exponential_number = 1.0e-10
+
+IO.puts("Float number: #{my_float_number}")
+IO.puts("Exponential number: #{my_exponential_number}")
+```
+
+### Átomos (Atom)
+
+Um átomo é uma constante onde seu nome é o seu próprio valor. Booleanos "true" e "false" são considerados atoms, funcionando basicamente como se fossem aliases de ":true" ":false". Além desse detalhe dos booleanos, nome de móduloas também são considerados atoms.
+
+```elixir
+:my_first_atom
+
+defmodule MyApp.FirstModule do
+end
+
+IO.puts("First atom: #{:my_first_atom}")
+IO.puts("Boolean values is atom? #{is_atom(true)}")
+IO.puts("Module names is atom? #{is_atom(MyApp.FirstModule)}")
+```
+
+### Booleanos (Boolean)
+
+<!-- livebook:{"break_markdown":true} -->
+
+Assim como todas as outras linguagens elixir possui true e false como booleanos. Todo valor é verdadeiro com exceção de "false" e "nil".
+
+```elixir
+my_true_value = true
+my_false_value = false
+my_nil_value = nil
+
+IO.puts("True value: #{my_true_value}")
+IO.puts("False value: #{my_false_value}")
+IO.puts("Null value: #{my_nil_value}")
+
+```
+
+### Strings (String)
+
+Codificadas em UTF-8 e representada por aspas duplas, as strings também suportam quebras de linha e caracteres de escape.
+
+```elixir
+my_first_string = "Hello World!"
+
+IO.puts("first user message: #{my_first_string}")
+```
+
+### Operações básicas
+
+O Elixir suporta todos os operadores básicas esperados: +, -, * e /. É importante ressaltar que divisões sempre retornarão números floats. O Elixir também disponibiliza funções que são espeialmente úteis para divisões inteiras e restos.
+
+```elixir
+IO.puts("Addition: #{2 + 2}")
+IO.puts("Subtraction: #{2 - 2}")
+IO.puts("Multiplication: #{2 * 3}")
+IO.puts("Division: #{10 / 2}")
+IO.puts("Integer Division: #{div(10,5)}")
+IO.puts("rest Division: #{rem(10,3)}")
+```
+
+### Operadores
+
+O Elixir provê os operadores booleanos `||, && e !`. Além destes, ainda existem três operadores adicionais cujo primeiro argumento deve ser um booleano.
+
+```elixir
+IO.puts(-20 || true)
+```
