@@ -1,4 +1,4 @@
-# Basic tips
+# Basics
 
 ## Tipos básicos
 
@@ -72,6 +72,10 @@ Codificadas em UTF-8 e representada por aspas duplas, as strings também suporta
 my_first_string = "Hello World!"
 
 IO.puts("first user message: #{my_first_string}")
+
+name = "User"
+
+IO.puts("Hello, " <> name)
 ```
 
 ### Operações básicas
@@ -87,10 +91,19 @@ IO.puts("Integer Division: #{div(10,5)}")
 IO.puts("rest Division: #{rem(10,3)}")
 ```
 
-### Operadores
+## Operadores
 
-O Elixir provê os operadores booleanos `||, && e !`. Além destes, ainda existem três operadores adicionais cujo primeiro argumento deve ser um booleano.
+O Elixir provê os operadores booleanos `||, && e !`. Além destes, ainda existem três operadores adicionais: `and, or e not` cujo primeiro argumento deve ser um booleano. Além desses, ainda existem três operadores adicionais cujo primeiro argumento tem que ser um booleano (true ou false). <br> <br>
+
+<b>
+Nota:
+</b>
 
 ```elixir
 IO.puts(-20 || true)
+IO.puts(42 && true)
+IO.puts(!false)
+IO.puts(true and 42)
+IO.puts(not false)
+IO.puts(42)
 ```
