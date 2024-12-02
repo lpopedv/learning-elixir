@@ -1,0 +1,94 @@
+# Pattern Matching
+
+## Operador Match
+
+Pattern matching é uma parte poderosa de Elixir que nos permite buscar padrões em valores, estruturas de dados e funções.
+
+<!-- livebook:{"break_markdown":true} -->
+
+O operador `=` não é um operador de atribuição como nas outras linguagens. em Elixir ele é o operador de match, que é equivalente ao sinal de igualdade da matemática. Quando esse operador é utilizado, toda a expressão se torna uma espécie de equação e o Elixir vai tentar combinar os valores do lado esquerdo com os valores do lado direito. Se o processo for feito com sucesso, o valor da equação é retornado, caso contrário um erro é lançado.
+
+<!-- livebook:{"break_markdown":true} -->
+
+A grosso modo, utilizamos pattern matching para comparar e atribuir valores baseados em padrões. Diferente de uma atribuição direta ele compara se os lados direito e esquerdo combinam.
+
+```elixir
+# Combinação
+{a, b} = {1, 2}
+```
+
+```elixir
+# Erro por conta da falta de combinação (2 variáveis do lado esquerdo, 3 valores no direito)
+{a, b} = {1, 2, 3}
+```
+
+```elixir
+{ :ok, value } = { :ok, "Successfully!" }
+```
+
+```elixir
+value
+```
+
+```elixir
+{ :ok, value } = { :error }
+```
+
+O termo <b>combinar</b> significa que a estrutura e os valores do lado esquerdo e direito do operador `=`correspondem de forma compatível. O lado esquerdo contém um padrão, o direito valores.
+
+<!-- livebook:{"break_markdown":true} -->
+
+##### Variáveis combinam com qualquer valor:
+
+```elixir
+x = 42  # Sempre combina, x recebe 42
+```
+
+##### átomos, números e string só combinam com iguais:
+
+```elixir
+:ok = :ok    # Combina
+:ok = :error # Erro: :ok ≠ :error
+```
+
+## Operador Pin
+
+Em alguns casos, podemos não desejar a reassociação de variável no pattern matching, e para essas situações utilizamos o operador pin: `^`. <br>
+Quando utilizado, vamos associar o valor existente ao invés de reassociar a um novo valor. Resumidamente ele é usado para fixar o valor de uma variável durante o pattern matching, ou seja, ele impede que a variável seja reatribuída, exigindo que o valor atual combine exatamente com o valor esperado.
+
+<!-- livebook:{"break_markdown":true} -->
+
+##### Sem o operador `pin`, a variável pode ser reatribuída:
+
+```elixir
+x = 10
+{x, y} = {20, 30} 
+# x agora é 20, y = 30
+```
+
+##### Com o operador pin (^), o valor da variável é fixado:
+
+```elixir
+x = 10
+{^x, y} = {10, 30}  
+# Combina, porque o valor atual de x (10) corresponde ao padrão
+# y = 30
+```
+
+```elixir
+x = 10
+{^x, y} = {20, 30}  
+# Erro: 10 (valor fixado em x) ≠ 20
+```
+
+### Quando utilizar
+
+* Para garantir que uma variável já definida tenha um valor específico no pattern matching.
+* Evitar reatribuições automáticas e manter controle sobre os valores no padrão.
+
+<!-- livebook:{"break_markdown":true} -->
+
+### Resumo
+
+* O operador ^ fixa o valor de uma variável no pattern matching, forçando a comparação com o valor atual.
+* Sem o ^, a variável seria tratada como um novo valor e poderia ser reatribuída.
