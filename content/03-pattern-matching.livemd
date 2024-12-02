@@ -62,23 +62,20 @@ Quando utilizado, vamos associar o valor existente ao invés de reassociar a um 
 
 ```elixir
 x = 10
-{x, y} = {20, 30} 
-# x agora é 20, y = 30
+{x, y} = {20, 30} # x agora é 20, y = 30
 ```
 
 ##### Com o operador pin (^), o valor da variável é fixado:
 
 ```elixir
-x = 10
-{^x, y} = {10, 30}  
-# Combina, porque o valor atual de x (10) corresponde ao padrão
-# y = 30
+x = 10 
+{^x, y} = {10, 30} # Combina, porque o valor atual de x (10) corresponde ao padrão  
 ```
 
 ```elixir
 x = 10
-{^x, y} = {20, 30}  
-# Erro: 10 (valor fixado em x) ≠ 20
+{^x, y} = {20, 30} # Erro: 10 (valor fixado em x) ≠ 20  
+
 ```
 
 ### Quando utilizar
