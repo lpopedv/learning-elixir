@@ -2,7 +2,7 @@
 
 ## Listas
 
-As listas são simples coleções de valores de múltiplos tipos e valores não necessariamente exclusivos
+As listas são simples coleções de múltiplos tipos e valores não necessariamente exclusivos.
 
 ```elixir
 my_first_list = [3.14, :pie, "Pi"]
@@ -64,7 +64,7 @@ Além das funções acima, pode-se utilizar pattern matching com o operador | pa
 
 ## Tuplas
 
-A diferença entre tuplas e listas é que as tuplas são armazenadas de maneira contínua em memória. O acesso ao tamanho é rápida mas sua modificação é custosa.
+A diferença entre tuplas e listas é que as tuplas são armazenadas de maneira contínua em memória. O acesso ao tamanho é rápido mas sua modificação é custosa.
 
 ```elixir
 my_first_tuple = { 3.14, :pie, "pi" }
