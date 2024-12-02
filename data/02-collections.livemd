@@ -1,0 +1,113 @@
+# collections
+
+## Listas
+
+As listas são simples coleções de valores de múltiplos tipos e valores não necessariamente exclusivos
+
+```elixir
+my_first_list = [3.14, :pie, "Pi"]
+```
+
+Elixir implementa listas como listas encadeadas. Isso significa que acessar o tamanho da lista é uma operação de tempo linear `0(n)`, e justamente por isso é mais rápido inserir um elemento no início `(prepending)` do que no final (`appending`)
+
+<!-- livebook:{"break_markdown":true} -->
+
+#### Prepending
+
+```elixir
+["π" | my_first_list]
+```
+
+#### Appending
+
+```elixir
+my_first_list ++ ["π"]
+```
+
+<b>
+A concatenação de listas usa o operador ++/2
+</b>
+
+```elixir
+[1, 2] ++ [3, 4, 1]
+```
+
+Em Elixir o nome de uma função tem dois componentes: `nome` e `aridade`. A aridade de uma função basicamente é a quantidade de argumentos que essa função aceita.
+
+<!-- livebook:{"break_markdown":true} -->
+
+#### Topo / cauda
+
+<!-- livebook:{"break_markdown":true} -->
+
+Quando usamos listas é comum trabalhar com o `topo` (primeiro elemento) e o `fim` (último elemento) da lista. Elixir provê duas funções para lidar com isso, `hd` e `tl`
+
+<!-- livebook:{"break_markdown":true} -->
+
+##### hd
+
+```elixir
+hd my_first_list
+```
+
+##### tl
+
+```elixir
+tl my_first_list
+```
+
+Além das funções acima, pode-se utilizar pattern matching com o operador | para dividir a lista em topo e cauda
+
+```elixir
+[head | tail] = my_first_list
+```
+
+## Tuplas
+
+A diferença entre tuplas e listas é que as tuplas são armazenadas de maneira contínua em memória. O acesso ao tamanho é rápida mas sua modificação é custosa.
+
+```elixir
+my_first_tuple = { 3.14, :pie, "pi" }
+```
+
+É comum usar tuplas como um mecanismo que retorna <b>informação adicionais de funções</b>, que é muito utilizado em pattern matching.
+
+```elixir
+File.read("path/to/unknown/file")
+```
+
+## Listas de palavras-chave
+
+Listas de palavras-chave e mapas são coleções associativas no Elixir. Uma lista de palavras-chave é uma lista de tuplas de dois elementos, o primeiro elemento é um átomo e o segundo o seu "valor"
+
+```elixir
+my_first_key_word_list = [foo: "bar", hello: "world"]
+```
+
+```elixir
+[{ :foo, "bar" }, { :hello, "world" }]
+```
+
+Frequentemente usadas para passar opções a funções, as listas de palavras-chave são:
+
+* As chaves são átomos
+* As chaves estão ordenadas
+* As chaves não são únicas
+
+## Mapas
+
+Os mapas são a escolha para armazenamento chave-valor. A diferença dele para as listas de palavras-chave está no fato de que os mapas permitem chaves de qualquer tipo e não seguem uma ordem. Caso um elemento duplicado é inserido no mapa, sobrescreverá o valor anterior.
+
+```elixir
+my_first_map = %{:foo => "bar", "hello" => :world}
+```
+
+Quando os mapas possuem apenas átomos como palavra chave, ganham mais funcionalidades e uma sintaxe especial.
+
+```elixir
+my_second_map = %{name: "User", password: "123456"}
+```
+
+```elixir
+my_second_map.name
+```
