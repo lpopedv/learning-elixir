@@ -51,6 +51,41 @@ x = 42  # Sempre combina, x recebe 42
 :ok = :error # Erro: :ok ≠ :error
 ```
 
+#### Exemplificando
+
+```elixir
+defmodule PatternMatching do
+  # Via pattern matching, conseguimos garantir que a função a seguir só é executada caso a role do usuário for admin
+  def map_user(%{role: "admin"} = params) do
+    "#{params.name} - administrator"
+  end
+
+  # Da mesma forma, criamos uma função que é executada somente quando a role for user
+  def map_user(%{role: "user"} = params) do
+    "#{params.name} - user"
+  end
+
+  def map_user(%{role: _role}) do
+    "Invalid role"
+  end
+end
+```
+
+```elixir
+params01 = %{role: "admin", name: "Jon"}
+PatternMatching.map_user(params01)
+```
+
+```elixir
+params02 = %{role: "user", name: "Doe"}
+PatternMatching.map_user(params02)
+```
+
+```elixir
+params03 = %{role: "any-role", name: "Jão"}
+PatternMatching.map_user(params03)
+```
+
 ## Operador Pin
 
 Em alguns casos, podemos não desejar a reassociação de variável no pattern matching, e para essas situações utilizamos o operador pin: `^`. <br>
