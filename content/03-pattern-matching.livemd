@@ -56,17 +56,17 @@ x = 42  # Sempre combina, x recebe 42
 ```elixir
 defmodule PatternMatching do
   # Via pattern matching, conseguimos garantir que a função a seguir só é executada caso a role do usuário for admin
-  def map_user(%{role: "admin"} = params) do
-    "#{params.name} - administrator"
+  def map_user(%{role: "admin"}) do
+    {:ok, "Welcome administrator!"} # Tuplas são amplamente utilizadas para indicar sucesso/erro do retorno de funções
   end
 
   # Da mesma forma, criamos uma função que é executada somente quando a role for user
-  def map_user(%{role: "user"} = params) do
-    "#{params.name} - user"
+  def map_user(%{role: "user"}) do
+    {:ok, "Welcome user!"}
   end
-
+  # Para casos gerais, podemos exigir o matching de "role" mas ignorando seu valor
   def map_user(%{role: _role}) do
-    "Invalid role"
+    {:error, "Invalid role"}
   end
 end
 ```
@@ -124,3 +124,34 @@ x = 10
 
 * O operador ^ fixa o valor de uma variável no pattern matching, forçando a comparação com o valor atual.
 * Sem o ^, a variável seria tratada como um novo valor e poderia ser reatribuída.
+
+## Guards
+
+Guards em Elixir não são exatamente uma forma de pattern matching, mas sim uma extensão dele. Enquanto o pattern matching verifica a estrutura ou formato de um valor, os guards são usados para verificar condições adicionais baseadas no conteúdo ou nas propriedades desse valor.
+
+```elixir
+defmodule Guards do
+  def check_number(x) when is_integer(x) and x > 0 do
+    "Número positivo"
+  end
+
+  def check_number(x) when is_integer(x) and x < 0 do
+    "Número negativo"
+  end
+
+  def check_number(_x), do: "Não é um número inteiro válido"
+end
+
+```
+
+```elixir
+Guards.check_number(1)
+```
+
+```elixir
+Guards.check_number(-1)
+```
+
+```elixir
+Guards.check_number("asd")
+```
