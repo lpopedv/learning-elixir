@@ -1,0 +1,45 @@
+# Estruturas de controle
+
+## If e unless
+
+Em Elixir, if e unless funcionam de forma semelhante às construções condicionais de outras linguagens, mas com algumas características próprias:
+
+* <b>Definidos como macros:</b> if e unless não são construções nativas da linguagem, mas macros que fazem parte do módulo Kernel. Isso significa que eles são extensíveis e podem ser sobrescritos, caso necessário.
+
+* <b>Valores considerados falsos:</b> Em Elixir, apenas `false` e `nil` são avaliados como falsos em contextos condicionais. Qualquer outro valor é tratado como verdadeiro.
+
+* <b>Uso de if:</b> Avalia a condição fornecida e executa o bloco de código associado ao do quando a condição é verdadeira. Opcionalmente, pode incluir um bloco else para lidar com o caso em que a condição é falsa.
+
+* <b>Uso de unless:</b> É o inverso de if. Executa o bloco de código associado ao do quando a condição é falsa. Assim como o if, pode incluir um bloco else para tratar o caso contrário.
+
+<!-- livebook:{"break_markdown":true} -->
+
+#### if
+
+```elixir
+if String.valid?("Hello World!") do
+  "Valid String!"
+else
+  "Invalid String!"
+end
+```
+
+```elixir
+if "a string value" do
+  "Truthy"
+end
+```
+
+#### unless
+
+<!-- livebook:{"break_markdown":true} -->
+
+O uso de unless é bem parecido com o uso de if, porém trabalhando de forma negativa
+
+```elixir
+unless is_integer("hello") do
+  "not an int"
+end
+```
+
+## Case
