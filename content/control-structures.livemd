@@ -43,3 +43,23 @@ end
 ```
 
 ## Case
+
+O case em Elixir avalia uma expressão e tenta casar seu valor com os padrões definidos. Se nenhum padrão for atendido, ocorre um CaseClauseError. Podemos evitar o erro tratando todos os outros casos com a variável `_`.
+
+```elixir
+case {:ok, "Hello World"} do
+  {:ok, result} -> result
+  {:error} -> "Some error"
+  _ -> "Catch all"
+end
+```
+
+Dentro do case podemos utilizar os guards:
+
+```elixir
+case {1, 2, 3} do
+  {1, x, 3} when x > 0 ->
+    "match"
+  _ -> "Won't match"
+end
+```
