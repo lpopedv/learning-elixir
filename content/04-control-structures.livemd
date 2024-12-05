@@ -63,3 +63,41 @@ case {1, 2, 3} do
   _ -> "Won't match"
 end
 ```
+
+## Cond
+
+Quando precisarmos associar condições e não valores, podemos utilizar o `cond/1`. Ele é semelhante ao `else if` ou `elsif` de outras linguagens
+
+```elixir
+cond do
+  2 + 2 == 5 ->
+    "This will not be true"
+  2 * 2 == 3 ->
+    "Nor this"
+  1 + 1 == 2 ->
+    "But this will"
+end
+```
+
+Assim como o `case/2`, o `cond/1` irá gerar um erro caso não encontre uma associação. Para lidar com isso, podemos definiar a condição para `true`.
+
+```elixir
+cond do
+  7 + 1 == 0 -> "Incorrect"
+  true -> "Catch all"
+end
+```
+
+## With
+
+O `with/1` em Elixir é uma construção que simplifica o fluxo de controle em casos onde múltiplas operações precisam ser encadeadas e verificadas. Ele é útil para evitar blocos `case` aninhados. O `with` avalia expressões sequencialmente e, se todas tiverem sucesso (retornarem o padrão esperado), a última expressão é retornada. Caso uma delas falhe, o fluxo é interrompido e o valor não correspondido é retornado.
+
+```elixir
+with {:ok, num} <- {:ok, 42},
+     {:ok, doubled} <- {:ok, num * 2} do
+  {:success, doubled}
+else
+  error -> error
+end
+
+```
