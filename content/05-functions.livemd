@@ -169,3 +169,25 @@ Greeter5.hello("Rogan")
 ```elixir
 Greeter5.phare
 ```
+
+## Guards
+
+Guards em Elixir são condições adicionais utilizadas em `patterns` para refinar o comportamento de quando uma função será chamada. Elas são expressas após a palavra-chave `when`, e permite verificar se um valor atende a uma condição específica além do `pattern matching` em sí.
+
+```elixir
+defmodule GuardsExample do
+  def verify(x) when x > 10, do: "Maior que 10"
+  def verify(x) when x <= 10, do: "Menor ou igual a 10"
+end
+
+```
+
+```elixir
+GuardsExample.verify(1)
+```
+
+```elixir
+GuardsExample.verify(15)
+```
+
+## Section
