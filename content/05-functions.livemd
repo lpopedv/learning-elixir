@@ -152,3 +152,20 @@ Resumo:
 </b>
 
 ## Funções privadas
+
+Todas as funções de módulos são acessíveis através de: ModuleName.funcName. Caso não desejarmos esse comportamento, podemos tornar uma função privada. Essas funções só podem ser chamadas dentro de seu próprio módulo. podemos definir uma função privada com `defp`:
+
+```elixir
+defmodule Greeter5 do
+  def hello(name), do: phrase() <> name
+  defp phrase, do: "Hello, "
+end
+```
+
+```elixir
+Greeter5.hello("Rogan")
+```
+
+```elixir
+Greeter5.phare
+```
