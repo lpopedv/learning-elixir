@@ -1,0 +1,154 @@
+# Funções
+
+## Funções anônimas
+
+Como o próprio nome indica, funções anônimas são funções que não possuem um nome. Elas são frequentemente utilizadas como argumentos de outras funções, como por exemplo as funções do módulo Enum. Para definir uma função anônima nós precisamos das palavras-chave `fn` e `end`. Podemos definir qualquer número de parâmetros e corpos separados por `->`.
+
+```elixir
+sum = fn (a, b) -> a + b end
+```
+
+```elixir
+sum.(5, 5)
+```
+
+Por ser uma prática comum em Elixir, existe uma `taquigrafia` (escrita rápida com símbolos) para a utilização de funções anônimas:
+
+```elixir
+taqSum = &(&1 + &2)
+```
+
+```elixir
+taqSum.(5, 5)
+```
+
+Os parâmetros estão disponíveis como `&1`, `&2`, `&3` e assim por diante.
+
+## Funções nomeadas
+
+Como já era de se esperar, podemos definir funções com nomes para utiliza-las no futuro. As funções nomeadas são definidas com a palavra-chave `def` dentro de um módulo.
+
+```elixir
+defmodule Greeter do
+  def hello(name) do
+    "Hello, " <> name
+  end
+end
+```
+
+```elixir
+Greeter.hello("Sean")
+```
+
+Se o corpo da nossa função possuir apenas uma linha, podemos reduzi-lo ainda mais com `do:`.
+
+```elixir
+defmodule GreeterShortHello do
+  def hello(name), do: "Hello, " <> name
+end
+```
+
+## Pattern matching
+
+O conceito de `pattern matching` não é limitado apenas as variáveis em Elixir, ele pode ser utilizado para definir e selecionar funções. "selecionar funções" significa que o `pattern matching` é usado para determinar qual entre várias definições de uma mesma função deve ser executada.
+
+```elixir
+defmodule Example do
+  def greeting("morning"), do: "Good morning!"
+  def greeting("afternoon"), do: "Good afternoon!"
+  def greeting("evening"), do: "Good evening!"
+end
+```
+
+Quando você chama `Example.greeting("afternoon")`, Elixir verifica cada definição da função `greeting/1` e seleciona a que corresponde ao padrão `"afternoon"`. Essa flexibilidade permite adaptar o comportamento da função com base nos valores dos parâmetros.
+
+## Nomear funções e Aridade
+
+As funções em Elixir são nomeadas pela combinação de `nome` e `aridade` (quantidade de argumentos) das funções. Isso significa que pode existir mais de uma função com o mesmo nome, desde que possua argumentos diferentes.
+
+```elixir
+defmodule Greeter2 do
+  def hello(), do: "Hello, anonymous person!" # hello/0
+  def hello(name), do: "Hello, #{name}"  # hello/1
+  def hello(name1, name2), do: "Hello, #{name1} and #{name2}"
+end
+```
+
+```elixir
+Greeter2.hello() # função de aridade 0 (hello/0)
+```
+
+```elixir
+Greeter2.hello("Jon") # função de aridade 1 (hello/1)
+```
+
+```elixir
+Greeter2.hello("Maria", "Clara") # função de aridade 2 (hello/2)
+```
+
+## Funções e pattern matching
+
+Por baixo dos panos, as funções fazem `pattern match` nos argumentos com as quais são chamadas. Se precisássemos de uma função que aceitasse um mapa mas estivéssemos interessados apenas em uma chave, poderíamos fazer o `pattern match` dessa chave.
+
+```elixir
+defmodule Greeter3 do
+  def hello(%{name: person_name}), do: IO.puts "Hello, #{person_name}"
+end
+```
+
+```elixir
+fred = %{
+  name: "Fred",
+  age: 95,
+  favorite_color: "Taupe"
+}
+```
+
+```elixir
+Greeter3.hello(fred)
+```
+
+Mas e se passarmos um mapa que não contenha a chave name?
+
+```elixir
+Greeter3.hello(%{age: 95, favorite_color: "Taupe"})
+```
+
+A razão para esse erro é que o Elixir faz o `pattern match` entre os `argumentos da chamada` e a `aridade da definição da função`.
+
+<!-- livebook:{"break_markdown":true} -->
+
+Greeter3.hello/1 espera como argumanto: `%{name: person_name}`
+
+<!-- livebook:{"break_markdown":true} -->
+
+O mapa `fred` que passamos é comparado com nosso argumento `%{name: person_name}`
+
+```elixir
+%{name: person_name} = %{name: "Fred", age: "95", favorite_color: "Taupe"}
+```
+
+Ele consegue encontrar a chave que corresponse a `name` no mapa de argumento (fred), e assim conseguimos um match! E o resultado desse match é o valor da chave `:name` do mapa da direita (fred) é atribuído a variável da esquerda (person_name).
+
+<!-- livebook:{"break_markdown":true} -->
+
+Mas e se quiséssemos atribuir o nome de fred a `person_name` e também salvar todo o mapa? Conseguimos fazer da seguinte maneira:
+
+```elixir
+defmodule Greeter4 do
+  def hello(%{name: person_name} = person) do
+    IO.puts "Hello, #{person_name}"
+    IO.inspect person
+  end
+end
+```
+
+```elixir
+Greeter4.hello(fred)
+```
+
+<b>
+Resumo:
+</b>
+
+## Funções privadas
