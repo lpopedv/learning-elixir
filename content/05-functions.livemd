@@ -190,4 +190,25 @@ GuardsExample.verify(1)
 GuardsExample.verify(15)
 ```
 
-## Section
+## Argumentos padrões
+
+Se nós quisermos um valor padrão para um argumento, podemos utilizar a sintaxe `argumento \\ valor`
+
+```elixir
+defmodule FinalGreeter do
+  def hello(name, language_code \\ "en") do
+    phrase(language_code) <> name
+  end
+
+  defp phrase("en"), do: "Hello, "
+  defp phrase("pt"), do: "Olá, "
+end
+```
+
+```elixir
+FinalGreeter.hello("Jon")
+```
+
+```elixir
+FinalGreeter.hello("Doe", "pt")
+```
