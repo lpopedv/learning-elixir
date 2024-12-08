@@ -1,0 +1,83 @@
+# Módulos
+
+## Módulos
+
+Os módulos em Elixir permitem a organização de funções em um mesmo namespace. Além de agrupar funções, eles permitem definir `funções nomeadas` e `funções privadas`.
+
+```elixir
+defmodule Example do
+  def greeting(name) do
+    "Hello #{name}"
+  end
+end
+```
+
+```elixir
+Example.greeting("Jon")
+```
+
+É possível aninhar módulos em Elixir, o que permite promover um namespace para a funcionalidade:
+
+```elixir
+defmodule Example.Greetings do
+  def morning(name), do: "Good morning #{name}"
+  def evening(name), do: "Good night #{name}"
+end
+```
+
+```elixir
+Example.Greetings.morning("Doa")
+```
+
+## Atributos de um módulo
+
+`Atributos` de módulo são mais comumente usados como `constantes` em Elixir:
+
+```elixir
+defmodule AttributesExample do
+  @greeting "Hello"
+
+  def greeting(name), do: "#{@greeting} #{name}"
+end
+```
+
+Vale lembrar que existem atributos reservados no Elixir. Os três mais comuns são:
+
+* <b> moduledoc</b>: Documenta o módulo atual
+* <b>doc</b>: Documentação para funções e macros
+* <b>behaviour</b>: Usa um OTP ou comportamento definido
+
+## Structs
+
+`Structs` basicamente são `mapas com nomes`. Uma `struct` deve ser definida dentro de um módulo que leva o mesmo nome dele. É comum para uma struct ser a única coisa definida dentro de um módulo.
+
+```elixir
+defmodule Example.User do
+  defstruct name: "Sean", roles: []
+end
+```
+
+```elixir
+%Example.User{}
+```
+
+```elixir
+steve = %Example.User{name: "Steve", roles: [:manager]}
+```
+
+Também é possível `proteger` campos e não exibi-los em um inspect através da funcionalidade de @derive.
+
+```elixir
+defmodule ExampleDerive.User do
+  @derive {Inspect, only: [:name]}
+  defstruct name: nil, roles: []
+end
+```
+
+```elixir
+sean = %ExampleDerive.User{name: "Sean", roles: [:admin]}
+```
+
+```elixir
+inspect(sean)
+```
