@@ -1,0 +1,29 @@
+# Operador Pipe
+
+## Introdução
+
+O operador pipe `|>` passa o resultado de uma expressão como primeiro parâmetro de outra expressão. Isso facilita a leitura e a composição de funções encadeadas.
+
+<!-- livebook:{"break_markdown":true} -->
+
+Em outras linguagens é possível encontrarmos esse tipo de sintaxe: `foo(bar(baz(new_function(other_function()))))`
+
+<!-- livebook:{"break_markdown":true} -->
+
+Aqui, nós estamos passando o valor `other_function/0` para `new_function/1`, e `new_function/1` para `baz/1`, `baz/1` para `bar/1`, e finalmente o resultado de `bar/1` para `foo/1`. Elixir possui um modo pragmático para esse caos sintático, permitindo-nos a utilização do operador pipe. O operador pipe é representado por |>, recebe o resultado de uma expressão e passa ele adiante. Vamos dar mais uma olhada no trecho de código acima reescrito com o operador pipe.
+
+<!-- livebook:{"break_markdown":true} -->
+
+`other_function() |> new_function() |> baz() |> bar() |> foo()`
+
+```elixir
+"Elixir rocks" |> String.split() # Enviamos a string "Elixir rocks" para a função split do módulo de String
+```
+
+```elixir
+"Elixir rocks" |> String.upcase() |> String.split() # Convertando palavras para letras maiúsculas
+```
+
+```elixir
+"elixir" |> String.ends_with?("ixir") # Verificando terminação de palavra
+```
