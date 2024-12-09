@@ -81,3 +81,52 @@ sean = %ExampleDerive.User{name: "Sean", roles: [:admin]}
 ```elixir
 inspect(sean)
 ```
+
+## Composição
+
+Utilizar composição nos nossos módulos nos permite incluir uma funcionalidade já existente dentro de um módulo.
+
+<!-- livebook:{"break_markdown":true} -->
+
+#### alias
+
+<!-- livebook:{"break_markdown":true} -->
+
+`Alias` é uma forma de criar uma espécie de "atalho" para um módulo, permitindo que você use um nome mais curto ao invés de referenciar o módulo completo.
+
+```elixir
+defmodule Sayings.Greetings do
+  def basic(name), do: "Hi, #{name}"
+end
+
+defmodule AliasExample do
+  alias Sayings.Greetings # O alias se torna a última palavra do módulo
+
+  def greeting(name), do: Greetings.basic(name) # Utilizando alias
+end
+
+defmodule NoAliasExample do
+  def greeting(name), do: Sayings.Greetings.basic(name) # Sem utilizar alias
+end
+```
+
+Caso haja conflito com dois aliases ou você deseja criar um alias personalizado, podemos utilizar a opção `:as`:
+
+```elixir
+defmodule ExampleCustomAliase do
+  alias Sayings.Greetings, as: Hi
+
+  def print_message(name), do: Hi.basic(name)
+end
+```
+
+Também é possível importar funções ao invés de criar aliases.
+
+```elixir
+last([1, 2, 3])
+```
+
+```elixir
+import List
+last([1, 2, 3])
+```
