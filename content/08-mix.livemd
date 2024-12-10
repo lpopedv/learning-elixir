@@ -1,0 +1,100 @@
+# Mix
+
+## Novos projetos
+
+O Mix é a ferramenta de gerenciamento de projetos do Elixir. Ele é usado para criar, compilar, gerenciar dependências e executar tarefas em projetos Elixir.
+
+<!-- livebook:{"break_markdown":true} -->
+
+Quando vamos criar um novo projeto em Elixir, o mix faz com que isso sej afácil utilizando o comando `mix new`. Esse comando gera uma estrutura de pastas bastante simples.
+
+```elixir
+mix new example
+```
+
+* creating README.md
+* creating .formatter.exs
+* creating .gitignore
+* creating mix.exs
+* creating lib
+* creating lib/example.ex
+* creating test
+* creating test/test_helper.exs
+* creating test/example_test.exs
+
+<!-- livebook:{"break_markdown":true} -->
+
+Vamos focar a atenção no arquivo `mix.exs`. É aqui onde configuramos a aplicação, dependências, ambiente e versão.
+
+```elixir
+defmodule Example.Mix do
+  use Mix.Project
+
+  # Aqui nós definimos algumas configurações do projeto
+  def project do
+    [
+      app: :example,
+      version: "0.1.0",
+      elixir: "~> 1.5",
+      start_permanent: Mix.env() == :prod,
+      deps: deps()
+    ]
+  end
+
+  # Essa seção é usada durante a geração do nosso arquivo de aplicação
+  def application do
+    [
+      extra_applications: [:logger]
+    ]
+  end
+
+  # Aqui adicionamos as dependências desejadas do projeto
+  defp deps do
+    []
+  end
+end
+```
+
+## Iterativo
+
+O mix nos permite acessar o `iex` dentro do contexto da nossa aplicação, ou seja, abrimos uma sessão `iex` onde temos acesso a todos os módulos e funções da nossa aplicação Elixir.
+
+```elixir
+iex -S mix # disponível apenas no diretório de uma aplicação com mix
+```
+
+## Compilação
+
+O mix é inteligente e consegue compilar as alterações quando necessário, mas talvez se faça necessário compilar explicitamente, basta rodarmos o comando `mix compile` <br>
+Uma vez com o projeto compilado, o mix cria um diretório `_build`, onde fica a versão final da aplicação.
+
+## Gerenciando dependências
+
+Para adicionar uma dependência no projeto, inserimos uma tupla de dois valores obrigatórios e um opcional: o nome do pacote como um `atom`, a versão como `string` e opções opcionais.
+
+```elixir
+def deps do
+  [
+    {:phoenix, "~> 1.1 or ~> 1.2"},
+    {:phoenix_html, "~> 2.3"},
+    {:cowboy, "~> 1.0", only: [:dev, :test]},
+    {:slime, "~> 0.14"}
+  ]
+end
+```
+
+Após a definição de dependências, precisamos instala-las. Para isso basta rodar o comando `mix deps.get`
+
+## Ambientes
+
+O mix trabalha com três ambientes:
+
+* `:dev` - O ambiente padrão
+* `:test` - Usado por `mix test`
+* `:prod` - Usado quando nós enviamos nossa aplicação para produção <br>
+
+O ambiente pode ser alterado através da variável de ambiente `MIX_ENV`
+
+```elixir
+MIX_ENV=prod mix compile
+```
