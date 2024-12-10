@@ -90,8 +90,6 @@ Utilizar composição nos nossos módulos nos permite incluir uma funcionalidade
 
 #### alias
 
-<!-- livebook:{"break_markdown":true} -->
-
 `Alias` é uma forma de criar uma espécie de "atalho" para um módulo, permitindo que você use um nome mais curto ao invés de referenciar o módulo completo.
 
 ```elixir
@@ -120,6 +118,8 @@ defmodule ExampleCustomAliase do
 end
 ```
 
+#### import
+
 Também é possível importar funções ao invés de criar aliases.
 
 ```elixir
@@ -129,4 +129,77 @@ last([1, 2, 3])
 ```elixir
 import List
 last([1, 2, 3])
+```
+
+#### filtros
+
+por padrão todas as funções são importadas. Utilizando filtros nós podemos importar apenas as funções que vamos utilizar. Podemos filtrar utilizando as opções `:only` e `:except`.
+
+```elixir
+import List, only: [last: 1] # importanto apenas a função last de aridade 1
+```
+
+```elixir
+last([1, 2, 3])
+```
+
+Além do par nome/aridade existem dois átomos especiais, `:functions` e `macros`, que importam apenas funções e macros, respectivamente:
+
+```elixir
+import List, only: :functions
+import List, only: :macros
+```
+
+#### require
+
+Nós podemos usar `require` para dizer ao Elixir que vamos usar macros de um outro módulo. A diferença de require para `import` é que o `require` permite usar somente macros, funções não são importadas.
+
+```elixir
+defmodule Example do
+  require SuperMacros
+
+  SuperMacros.do_stuff
+end
+```
+
+#### use
+
+A macro `use` facilita a inclusão de funcionalidades e comportamentos em módulos. Ao utilizar `use` você ativa a macro `__using__/1` do módulo que está sendo utilizado. Essa macro pode injetar código ou realizar configurações no módulo que o implementa.
+
+<!-- livebook:{"break_markdown":true} -->
+
+* <b>Definição do</b> `__using__/1`: O módulo que será usado precisa definir a macro especial `__using__/1`.
+  Essa macro deve retornar um `quoted expression`, que nada mais é do que um <b>bloco de código</b> que será <b>incluído</b> no módulo que está <b>utilizando</b> o `use`.
+* <b>Execução do `use`</b>: Quando um módulo utiliza `use AnotherModule`, o compilador executa a macro `__using__/1` de `AnotherModule` e injeta o código gerado diretamente no módulo que chamou o `use`.
+
+```elixir
+# Módulo que será utilizado por outros com `use`
+defmodule LearnElixir.AnotherModule do
+  defmacro __using__(opts) do # Define o que será adicionado no módulo que usar use 
+    quote do # Qualquer coisa dentro de quote será literalmente inserida no módulo.
+      def hello() do
+        IO.puts "Hello World!"
+      end
+
+      # Injeta um atributo de módulo, usando as opções passadas por `use`
+      @opts unquote(opts) 
+    end
+  end
+end
+```
+
+```elixir
+alias LearnElixir.AnotherModule # Cria um alias para facilitar o uso
+
+# Módulo que utiliza `LearnElixir.AnotherModule` com `use`
+defmodule LearnElixir.UseExample do
+  # Chama a macro `__using__/1` do módulo `LearnElixir.AnotherModule`
+  use AnotherModule, option_to_pass: :option_value, another_option: :another_option_value  # As opções são passadas para o "opts" da macro
+end
+```
+
+```elixir
+alias LearnElixir.UseExample
+
+UseExample.hello()
 ```
