@@ -1,0 +1,35 @@
+# Sigils
+
+## Overview
+
+O Elixir nos fornece uma sintaxe alternativa para representar e trabalhar com literais (valores diretos escritos no código, como números, strings, listas, etc) através dos sigils.
+
+<!-- livebook:{"break_markdown":true} -->
+
+Um sigil começa com um til (~) e é seguido por um identificador e um par de delimitadores. É possível criar nossos próprios sigils, mas o núcleo do Elixir nos fornece alguns.
+
+<!-- livebook:{"break_markdown":true} -->
+
+* `~C` Gera uma lista de caracteres sem escape ou interpolação
+* `~c` Gera uma lista de caracteres com escape e interpolação
+* `~R` Gera uma expressão regular sem escape ou interpolação
+* `~r` Gera uma expressão regular com escape e interpolação
+* `~S` Gera strings sem escape ou interpolação
+* `~s` Gera string com escape e interpolação
+* `~W` Gera uma lista sem escape ou interpolação
+* `~w` Gera uma lista com escape e interpolação
+* `~N` Gera uma NaiveDateTime struct
+* `~U` Gera uma DateTime struct (desde Elixir 1.9.0)
+
+<!-- livebook:{"break_markdown":true} -->
+
+Delimitadores
+
+* <...> Um par de brackets
+* {...} Um par de chaves
+* [...] Um par de colchetes
+* (...) Um par de parênteses
+* |...| Um par de pipes
+* /.../ Um par de barras
+* "..." Um par de aspas duplas
+* '...' Um par de aspas simples
