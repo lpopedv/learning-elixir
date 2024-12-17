@@ -1,0 +1,67 @@
+# Documentação
+
+## Anotações
+
+Elixir trata a documentação de um projeto como uma cidadã de primeira classe, fornecendo várias funções de acesso e geração de documentação. A seguir veja três maneiras:
+
+<!-- livebook:{"break_markdown":true} -->
+
+* `#` Documentação em linha
+* `@moduledoc` Documentação em nível de módulo
+* `@doc` Documentação em nível de função
+
+## Documentação em linha
+
+A maneira mais simples de comentar o código é com comentários em linha. O comentário de linha é determinado com um `#`. Tudo após o `#` é ignorado.
+
+```elixir
+# Outputs 'Hello, tchum' to the console
+IO.puts("Hello, " <> "tchum")
+```
+
+## Documentação de módulos
+
+A anotação `@moduledoc` permite a documentação a nível de módulo. É tipicamente definida logo abaixo da declaração `defmodule` no topo do arquivo.
+
+```elixir
+defmodule Greeter do
+  @moduledoc """
+  Provides a function `hello/1` to greet a human
+  """
+
+  def hello(name), do: "Hello, #{name}"
+end
+```
+
+É posível acessar essa documentação de módulo usando o helper `h` dentro do IEx.
+
+## Documentação de funções
+
+Assim como podemos documentar um módulo, também conseguimos documentar uma função. Para isso, utilizamos a anotação `@doc` logo acima da função.
+
+```elixir
+defmodule Greeter2 do
+  @moduledoc """
+    module doc
+  """
+
+  @doc """
+    Prints a hello message
+
+  ## Parameters
+
+    - name: string that represents the name of the person
+
+  ## Examples
+
+    iex> Greeter2.hello("Sean")
+    "Hello, Sean"
+  """
+  @spec hello(String.t()) :: String.t()
+  def hello(name), do: "Hello, #{name}"
+end
+```
+
+## ExDoc
+
+O `ExDoc` é uma ferramenta no Elixir usada para gerar documentação de projetos. Ele converte comentários de documentação do código em `HTML` ou `EPUB`. É amplamente usado em conjunto com o `@doc` e `@moduledoc`.
