@@ -1,0 +1,34 @@
+# comprehensions
+
+## Basics
+
+Compreensions são um `syntatic sugar` para realizar loops em Enumerables no Elixir.
+
+```elixir
+list = [1, 2, 3, 4, 5]
+```
+
+```elixir
+for x <- list, do: x*x
+```
+
+A primeira coisa que podemos observar no exemplo é o uso do `for`, seguido por um `generator`. `Generators` são as expressões `x <- [1, 2, 3, 4]` encontradas em comprehensions. Elas são responsáveis por gerar o próximo valor.
+
+<!-- livebook:{"break_markdown":true} -->
+
+As comprehensions não são limitadas a listas, elas funcionam com qualquer enumerable:
+
+```elixir
+# Keyword Lists
+for {_key, val} <- [one: 1, two: 2, three: 3], do: val
+```
+
+```elixir
+# Maps
+for {k, v} <- %{"a" => "A", "b" => "B"}, do: {k, v}
+```
+
+```elixir
+# Binaries
+for <<c <- "hello">>, do: <<c>>
+```
