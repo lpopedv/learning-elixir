@@ -1,0 +1,53 @@
+# Data e tempo
+
+## Time
+
+O Elixir tem alguns módulos que trabalham com tempo. Vamos iniciar pegando o tempo atual:
+
+```elixir
+Time.utc_now()
+```
+
+Note que temos um sigil para time.
+
+```elixir
+t = Time.utc_now()
+```
+
+```elixir
+t.hour
+```
+
+```elixir
+t.minute
+```
+
+```elixir
+t.day
+```
+
+Note que essa struct contém apenas tempo de um dia, dados como dia/mes/ano não estão presentes.
+
+## Date
+
+Ao contrátio da struct `Time`, a struct `Date` tem informações sobre a data e nenhuma informação sobre o tmepo.
+
+```elixir
+Date.utc_today()
+```
+
+```elixir
+{:ok, date} = Date.new(2020, 12, 12)
+```
+
+```elixir
+Date.day_of_week(date)
+```
+
+```elixir
+Date.leap_year?(date)
+```
+
+## DateTime
+
+A struct `DateTime` não possui limitações, suporta data, hora e fusos horários.
